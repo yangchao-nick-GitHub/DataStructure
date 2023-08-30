@@ -1,6 +1,35 @@
 
-#include "array_stack.h"
+#include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+#define internal_allocate malloc
+#define internal_deallocate free
+
+typedef struct internal_hook {
+    void* (*allocate)(size_t size);
+    void (*deallocate)(void *pointer);
+}internal_hook;
+
+
+template<class T>
+class ArrayStack {
+public:
+    ArrayStack(int size);
+    ~ArrayStack();
+    void StackPush(T data);
+    T StackPop();
+    T StackTop();
+    bool IsEmpty();
+    T GetPosStackItme(int pos);
+    static internal_hook m_hook;
+
+private:
+    T *m_item;
+    int m_capacity;
+    int m_size;
+};
+
 
 template<class T>
 internal_hook ArrayStack<T>::m_hook = { internal_allocate,  internal_deallocate};
@@ -17,7 +46,7 @@ template<class T>
 ArrayStack<T>::~ArrayStack()
 {
     if (m_item) {
-        delete[] m_item;
+        delete[]m_item;
         m_item = nullptr;
     }
 }
@@ -69,4 +98,10 @@ T ArrayStack<T>::GetPosStackItme(int pos)
         return ;
     }
     return m_item[pos];
+}
+
+int main()
+{
+    ArrayStack<int> stack(10);
+    return 0;
 }
