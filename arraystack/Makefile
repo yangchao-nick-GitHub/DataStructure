@@ -1,14 +1,14 @@
 CC=g++
-#CFLAGS=-I.
 DEPS = array_stack.h
 TGE = array_stack
-OBJ = test.o array_stack.o 
+OBJ = test.o
+CFLAGS = -g -Wall -I.
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $<
-
-$(TGE): $(OBJ)
+$(TGE):$(OBJ)
 	$(CC) -o $@ $^ 
+
+%.o:%.cpp
+	$(CC) -g -c $(CFLAGS) -o $@ $^
 
 .PHONY:clean
 clean:
