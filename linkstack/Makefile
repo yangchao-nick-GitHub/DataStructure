@@ -2,7 +2,7 @@ CC=g++
 DEPS = link_stack.h
 TGE = link_stack
 OBJ = test.o
-CFLAGS = -g -Wall -I.
+CFLAGS = -g  -I. -Wall
 
 $(TGE):$(OBJ)
 	$(CC) -o $@ $^ 
